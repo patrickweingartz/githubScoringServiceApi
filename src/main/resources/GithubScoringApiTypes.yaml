@@ -1,0 +1,19 @@
+components:
+  schemas:
+    GithubRepository:
+      type: object
+      properties:
+        id:
+          type: string
+        full_name:
+          type: string
+        score:
+          type: number
+        numberOfStars:
+          type: integer
+        numberOfForks:
+          type: integer
+        recencyOfUpdates:
+          type: integer
+        popularityScoring:
+          type: integer
