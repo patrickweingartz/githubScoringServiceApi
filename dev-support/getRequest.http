@@ -1,0 +1,4 @@
+###
+GET localhost:8080/getGithubReposSortedByScore/
+repositoryLanguage: java
+minCreationDateOfRepository: 2025-10-09

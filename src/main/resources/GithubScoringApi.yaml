@@ -1,0 +1,32 @@
+openapi: 3.0.3
+info:
+  title: Github-Scoring-Service Api
+  description: API for the Scoring-Service
+  version: 1.0.0
+paths:
+    /getGithubReposSortedByScore/:
+      get:
+        tags:
+          - Scoring
+        operationId: getGithubReposSortedByScore
+        parameters:
+          - name: repositoryLanguage
+            in: header
+            required: false
+            schema:
+              type: string
+          - name: minCreationDateOfRepository
+            in: header
+            required: false
+            schema:
+              type: string
+              format: date
+              example: YYYY-MM-DD
+        summary: returns a popularity sorted list of github repositories filtered by the handed in language and creationDate
+        responses:
+          '200':
+            description: The sorted List of github repositories filtered by language and creationDate as JSON-List
+            content:
+              application/json:
+                schema:
+                  type: string
