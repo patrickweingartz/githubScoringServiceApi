@@ -4,11 +4,11 @@ info:
   description: API for the Scoring-Service
   version: 1.0.0
 paths:
-  /getGithubReposSortedByScore/:
+  /getGithubReposSortedByPopularityScore/:
     get:
       tags:
-        - Scoring
-      operationId: getGithubReposSortedByScore
+        - githubScoringService
+      operationId: getGithubReposSortedByPopularityScore
       parameters:
         - name: repositoryLanguage
           in: header
