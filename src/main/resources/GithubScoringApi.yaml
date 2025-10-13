@@ -15,6 +15,11 @@ paths:
           required: false
           schema:
             type: string
+        - name: authorizationToken
+          in: header
+          required: false
+          schema:
+            type: string
         - name: minCreationDateOfRepository
           in: header
           required: false
