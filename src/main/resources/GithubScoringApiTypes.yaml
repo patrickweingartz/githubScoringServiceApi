@@ -1,4 +1,5 @@
 components:
+  description: represents a single github repository result
   schemas:
     GithubRepository:
       type: object
