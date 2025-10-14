@@ -1,36 +1,42 @@
 openapi: 3.0.3
 info:
   title: Github-Scoring-Service Api
-  description: API for the Scoring-Service
+  description: API for the Scoring-Service processing user defined search requests against the github rest API
   version: 1.0.0
 paths:
-  /getGithubReposSortedByScore/:
+  /getGithubReposSortedByPopularityScore/:
     get:
       tags:
-        - Scoring
-      operationId: getGithubReposSortedByScore
+        - githubScoringService
+      operationId: getGithubReposSortedByPopularityScore
       parameters:
         - name: repositoryLanguage
-          in: header
+          in: path
           required: false
-          schema:
-            type: string
-        - name: authorizationToken
-          in: header
-          required: false
+          description: filters the github repository search by the handed in language
           schema:
             type: string
         - name: minCreationDateOfRepository
-          in: header
+          in: path
           required: false
+          description: filters the github repository search by the handed in creation date
           schema:
             type: string
-            format: date
             example: YYYY-MM-DD
+        - name: authorizationToken
+          in: header
+          required: false
+          description: >
+            represents the github authorization Token used to identify against the github rest api.
+            Without a valid token the github API will only return a limited set of results.
+          schema:
+            type: string
       summary: returns a popularity sorted list of github repositories filtered by the handed in language and creationDate
       responses:
         '200':
-          description: The sorted List of github repositories filtered by language and creationDate as JSON-List
+          description: >
+            Searchrequest was successfull delivering a popularity-based-sorted List of github repositories.
+            When nothing was found an empty list will be returned.
           content:
             application/json:
               schema:
