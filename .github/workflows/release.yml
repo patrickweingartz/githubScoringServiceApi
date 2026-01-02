@@ -39,6 +39,10 @@ jobs:
       - name: Build
         run: mvn clean package -DskipTests
 
+      - name: settings.xml anzeigen (ohne Token)
+        run: |
+          sed 's/<password>.*<\/password>/<password>****<\/password>/g' settings.xml
+
       - name: Deploy
         run: mvn deploy -DskipTests -X
         env:
