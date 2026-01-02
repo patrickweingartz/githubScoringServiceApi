@@ -10,7 +10,7 @@
 
   <groupId>io.github.patrickweingartz</groupId>
   <artifactId>githubScoringServiceApi</artifactId>
-	<version>4.0.13-SNAPSHOT</version>
+	<version>5.0.0-SNAPSHOT</version>
 	<name>GithubScoringServiceApi</name>
 	<description>API for the Scoring-Service</description>
   <url>https://github.com/patrickweingartz/githubScoringServiceApi</url>
