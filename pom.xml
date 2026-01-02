@@ -104,5 +104,10 @@
       <id>github</id>
       <url>https://maven.pkg.github.com/patrickweingartz/githubScoringServiceApi</url>
     </repository>
+    <snapshotRepository>
+      <id>github</id>
+      <name>GitHub Packages Snapshots</name>
+      <url>https://maven.pkg.github.com/patrickweingartz/githubScoringServiceApi</url>
+    </snapshotRepository>
   </distributionManagement>
 </project>
