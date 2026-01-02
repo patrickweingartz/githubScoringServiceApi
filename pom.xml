@@ -10,7 +10,7 @@
 
   <groupId>io.github.patrickweingartz</groupId>
   <artifactId>githubScoringServiceApi</artifactId>
-	<version>5.0.0</version>
+	<version>5.0.1-SNAPSHOT</version>
 	<name>GithubScoringServiceApi</name>
 	<description>API for the Scoring-Service</description>
   <url>https://github.com/patrickweingartz/githubScoringServiceApi</url>
@@ -32,7 +32,7 @@
     <connection>scm:git:https://github.com/patrickweingartz/githubScoringServiceApi.git</connection>
     <developerConnection>scm:git:https://github.com/patrickweingartz/githubScoringServiceApi.git</developerConnection>
     <url>https://github.com/patrickweingartz/githubScoringServiceApi</url>
-    <tag>githubScoringServiceApi-5.0.0</tag>
+    <tag>HEAD</tag>
   </scm>
 	<properties>
 		<java.version>21</java.version>
