@@ -12,13 +12,21 @@
 	<version>4.0.10-SNAPSHOT</version>
 	<name>GithubScoringServiceApi</name>
 	<description>API for the Scoring-Service</description>
-	<url />
-	<licenses>
-		<license />
-	</licenses>
-	<developers>
-		<developer />
-	</developers>
+  <url>https://github.com/patrickweingartz/githubScoringServiceApi</url>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>patrickweingartz</id>
+      <name>Knute Pansen</name>
+      <email>deine@email.de</email>
+    </developer>
+  </developers>
   <scm>
     <connection>scm:git:https://github.com/patrickweingartz/githubScoringServiceApi.git</connection>
     <developerConnection>scm:git:https://github.com/patrickweingartz/githubScoringServiceApi.git</developerConnection>
