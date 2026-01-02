@@ -9,7 +9,7 @@
   </parent>
 	<groupId>com.example</groupId>
 	<artifactId>GithubScoringServiceApi</artifactId>
-	<version>1.ß.5</version>
+	<version>1.0.6-SNAPSHOT</version>
 	<name>GithubScoringServiceApi</name>
 	<description>API for the Scoring-Service</description>
 	<url />
