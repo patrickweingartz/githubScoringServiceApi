@@ -8,7 +8,7 @@
     <relativePath />
   </parent>
   <groupId>io.github.patrickweingartz</groupId>
-  <artifactId>githubScoringServiceApiNeu</artifactId>
+  <artifactId>githubScoringServiceApi</artifactId>
 	<version>4.0.12</version>
 	<name>GithubScoringServiceApi</name>
 	<description>API for the Scoring-Service</description>
