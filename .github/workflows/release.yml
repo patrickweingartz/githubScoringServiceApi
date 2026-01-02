@@ -30,4 +30,4 @@ jobs:
       - name: Deploy to GitHub Packages
         run: mvn deploy -DskipTests
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PATS_TOKEN }}
