@@ -4,6 +4,10 @@ on:
   release:
     types: [published]  # Trigger nur bei Veröffentlichung eines Releases
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
