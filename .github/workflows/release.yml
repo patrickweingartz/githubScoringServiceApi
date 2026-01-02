@@ -2,7 +2,7 @@ name: Release Maven Package
 
 on:
   release:
-    types: [published]  # Trigger nur bei Veröffentlichung eines Releases
+    types: [published]
 
 permissions:
   contents: read
@@ -13,25 +13,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Repository auschecken
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2️⃣ JDK einrichten + Maven Settings für GitHub Packages
       - name: Set up JDK 21 and configure Maven
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 21
-          server-id: github              # muss exakt mit <id> in pom.xml übereinstimmen
-          settings-path: ${{ github.workspace }}  # dort wird settings.xml erzeugt
+          server-id: github
+          settings-path: ${{ github.workspace }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PATS_TOKEN }}
 
-      # 3️⃣ Maven Build
       - name: Build project
         run: mvn clean package -DskipTests
 
-      # 4️⃣ Maven Deploy zu GitHub Packages
       - name: Deploy to GitHub Packages
         run: mvn deploy -DskipTests
-        env:
-          GITHUB_TOKEN: ${{ secrets.PATS_TOKEN }}
