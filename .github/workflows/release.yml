@@ -1,48 +1,47 @@
-name: Release Maven Package
-
+name: Release and publish package to github
 on:
-  release:
-    types: [published]
-
-permissions:
-  contents: read
-  packages: write
-
+  workflow_dispatch:
 jobs:
-  build-and-deploy:
+  publish:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
+      packages: write
+    env:
+      TZ: Europe/Berlin
+      GITHUB_USER: patrickweingartz
+      GITHUB_TOKEN: ${{ secrets.PATS_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
         with:
-          distribution: temurin
-          java-version: 21
-          server-id: github
-          cache: maven
+          token: ${{ secrets.PATS_TOKEN }}
+          ref: main
+      - uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+          java-package: 'jdk'
+          architecture: 'x64'
+          cache: 'maven'
 
-      - name: Set up Maven settings.xml for GitHub Packages
+      - name: Configure git
         run: |
-          mkdir -p ~/.m2
-          echo "<settings>
-            <servers>
-              <server>
-                <id>github</id>
-                <username>patrickweingartz</username>
-                <password>${{ secrets.PATS_TOKEN }}</password>
-              </server>
-            </servers>
-          </settings>" > ~/.m2/settings.xml
-
-      - name: Build
-        run: mvn clean package -DskipTests
-
-      - name: settings.xml anzeigen (ohne Token)
-        run: |
-          sed 's/<password>.*<\/password>/<password>****<\/password>/g' ~/.m2/settings.xml
-      - name: Deploy
-        run: mvn deploy -DskipTests -X
+          git config --global user.name '@PbuBuildGitHub'
+          git config --global user.email 'PbuBuildGitHub@europace.de'
+        shell: bash
+      - name: Maven release
+        id: prepare
         env:
-          GITHUB_TOKEN: ${{ secrets.PATS_TOKEN }}
+          USERNAME: 'patrickweingartz'
+          PASSWORD: ${{ secrets.PATS_TOKEN }}
+        run: |
+          mvn --settings .github/workflows/settings.xml -B release:clean
+          mvn --settings .github/workflows/settings.xml -B -P github release:prepare -DtagNameFormat=v@{project.version}
+          mvn --settings .github/workflows/settings.xml -B -P github release:perform -Dusername=patrickweingartz -Dpassword=${{secrets.PATS_TOKEN}}
+        shell: bash
+      - name: Publish next development package to github repository
+        run: mvn --settings .github/workflows/settings.xml -B -P github deploy
+        shell: bash
+        env:
+          USERNAME: 'patrickweingartz'
+          PASSWORD: ${{ secrets.PATS_TOKEN }}
