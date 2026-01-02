@@ -25,20 +25,16 @@ jobs:
 
       - name: Set up Maven settings.xml for GitHub Packages
         run: |
-          mkdir -p $HOME/.m2
-          cat > $HOME/.m2/settings.xml <<EOF
-          <settings>
+          mkdir -p ~/.m2
+          echo "<settings>
             <servers>
               <server>
                 <id>github</id>
                 <username>patrickweingartz</username>
-                <password>${GITHUB_TOKEN}</password>
+                <password>${{ secrets.PATS_TOKEN }}</password>
               </server>
             </servers>
-          </settings>
-          EOF
-        env:
-          GITHUB_TOKEN: ${{ secrets.PATS_TOKEN }}
+          </settings>" > ~/.m2/settings.xml
 
       - name: Build
         run: mvn clean package -DskipTests
