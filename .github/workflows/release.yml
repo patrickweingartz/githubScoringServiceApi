@@ -41,8 +41,7 @@ jobs:
 
       - name: settings.xml anzeigen (ohne Token)
         run: |
-          sed 's/<password>.*<\/password>/<password>****<\/password>/g' settings.xml
-
+          sed 's/<password>.*<\/password>/<password>****<\/password>/g' ~/.m2/settings.xml
       - name: Deploy
         run: mvn deploy -DskipTests -X
         env:
