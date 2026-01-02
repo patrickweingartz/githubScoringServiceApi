@@ -9,8 +9,8 @@
   </parent>
 
   <groupId>io.github.patrickweingartz</groupId>
-  <artifactId>githubScoringServiceApi</artifactId>
-	<version>6.0.0-SNAPSHOT</version>
+  <artifactId>github-scoring-service-api</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>GithubScoringServiceApi</name>
 	<description>API for the Scoring-Service</description>
   <url>https://github.com/patrickweingartz/githubScoringServiceApi</url>
@@ -115,7 +115,7 @@
 	<distributionManagement>
     <repository>
       <id>github</id>
-      <url>https://maven.pkg.github.com/patrickweingartz/githubScoringServiceApi</url>
+      <url>https://maven.pkg.github.com/patrickweingartz/githubscoringserviceapi</url>
     </repository>
   </distributionManagement>
 </project>
