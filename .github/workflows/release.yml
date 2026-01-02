@@ -1,42 +1,73 @@
-name: Release and publish package to github
+name: Release Maven Package
+
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: 'Release version (without -SNAPSHOT)'
+        required: false
+        type: string
+      developmentVersion:
+        description: 'Next development version (with -SNAPSHOT)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  packages: write
+
+env:
+  TZ: Europe/Berlin
+
 jobs:
-  publish:
+  release:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      packages: write
-    env:
-      TZ: Europe/Berlin
-      GITHUB_USER: patrickweingartz
-      GITHUB_TOKEN: ${{ secrets.PATS_TOKEN }}
+
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.PATS_TOKEN }}
-          ref: main
-      - uses: actions/setup-java@v5
-        with:
-          java-version: '21'
-          distribution: 'adopt'
-          java-package: 'jdk'
-          architecture: 'x64'
-          cache: 'maven'
-      - name: Maven release
-        id: prepare
-        env:
-          USERNAME: 'patrickweingartz'
-          PASSWORD: ${{ secrets.PATS_TOKEN }}
+          fetch-depth: 0
+
+      - name: Configure Git
         run: |
-          mvn --settings .github/workflows/settings.xml -B release:clean
-          mvn --settings .github/workflows/settings.xml -B -P github release:prepare -DtagNameFormat=v@{project.version}
-          mvn --settings .github/workflows/settings.xml -B -P github release:perform -Dusername=patrickweingartz -Dpassword=${{secrets.PATS_TOKEN}}
-        shell: bash
-      - name: Publish next development package to github repository
-        run: mvn --settings .github/workflows/settings.xml -B -P github deploy
-        shell: bash
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Set up Maven settings.xml for GitHub Packages
+        run: |
+          mkdir -p ~/.m2
+          echo "<settings>
+            <servers>
+              <server>
+                <id>github</id>
+                <username>patrickweingartz</username>
+                <password>${{ secrets.PATS_TOKEN }}</password>
+              </server>
+            </servers>
+          </settings>" > ~/.m2/settings.xml
+
+      - name: Maven Release Prepare
+        run: |
+          if [ -n "${{ github.event.inputs.releaseVersion }}" ]; then
+            mvn release:prepare -B \
+              -DreleaseVersion=${{ github.event.inputs.releaseVersion }} \
+              -DdevelopmentVersion=${{ github.event.inputs.developmentVersion }} \
+              -DskipTests
+          else
+            mvn release:prepare -B -DskipTests
+          fi
         env:
-          USERNAME: 'patrickweingartz'
-          PASSWORD: ${{ secrets.PATS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PATS_TOKEN }}
+
+      - name: Maven Release Perform
+        run: mvn release:perform -B -DskipTests
+        env:
+          GITHUB_TOKEN: ${{ secrets.PATS_TOKEN }}
