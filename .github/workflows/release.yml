@@ -1,11 +1,11 @@
-name: Release JAR
+name: Release Maven Package
 
 on:
   release:
-    types: [published]
+    types: [published]  # Trigger bei GitHub Release
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,13 +17,13 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+          server-id: github       # muss exakt mit pom.xml Repository id übereinstimmen
+          settings-path: ${{ github.workspace }}  # dort wird settings.xml für Maven erzeugt
 
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
-      - name: Upload Release Asset
-        uses: softprops/action-gh-release@v2
-        with:
-          files: target/GithubScoringServiceApi-*.jar
+      - name: Deploy to GitHub Packages
+        run: mvn deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
