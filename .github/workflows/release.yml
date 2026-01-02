@@ -48,11 +48,20 @@ jobs:
             <servers>
               <server>
                 <id>github</id>
-                <username>patrickweingartz</username>
+                <username>${{ github.actor }}</username>
                 <password>${{ secrets.PATS_TOKEN }}</password>
               </server>
             </servers>
           </settings>" > ~/.m2/settings.xml
+
+      - name: Verify GitHub Token and Package Access
+        run: |
+          echo "GitHub Actor: ${{ github.actor }}"
+          echo "Repository: ${{ github.repository }}"
+          curl -H "Authorization: token ${{ secrets.PATS_TOKEN }}" \
+               -H "Accept: application/vnd.github+json" \
+               https://api.github.com/user | jq '.login'
+          echo "Checking write:packages permission..."
 
       - name: Maven Release Prepare
         run: |
