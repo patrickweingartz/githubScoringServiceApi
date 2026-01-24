@@ -11,13 +11,13 @@ paths:
       operationId: getGithubReposSortedByPopularityScore
       parameters:
         - name: repositoryLanguage
-          in: path
+          in: query
           required: false
           description: filters the github repository search by the handed in language
           schema:
             type: string
         - name: minCreationDateOfRepository
-          in: path
+          in: query
           required: false
           description: filters the github repository search by the handed in creation date
           schema:
@@ -40,6 +40,11 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: './GithubScoringApiTypes.yaml#/components/schemas/GithubRepository'
+                $ref: './GithubScoringApiTypes.yaml#/components/schemas/ApiResponseTyp'
+        '400':
+          description: >
+            The github-API will only provide results when there is at least one search criteria given
+          content:
+            application/json:
+              schema:
+                $ref: './GithubScoringApiTypes.yaml#/components/schemas/ErrorResponse'

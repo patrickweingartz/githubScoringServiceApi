@@ -18,3 +18,32 @@ components:
           example: 2025-01-01T10:20:00Z
         popularityScoring:
           type: integer
+
+    SuccessResponse:
+      type: object
+      properties:
+        type:
+          type: string
+          example: [success]
+        repositories:
+          type: array
+          items:
+            $ref: '#/components/schemas/GithubRepository'
+
+    ErrorResponse:
+      type: object
+      properties:
+        type:
+          type: string
+          example: [error]
+        errorCode:
+          type: string
+        errorMessage:
+          type: string
+
+    ApiResponseTyp:
+      oneOf:
+        - $ref: '#/components/schemas/SuccessResponse'
+        - $ref: '#/components/schemas/ErrorResponse'
+      discriminator:
+        propertyName: type

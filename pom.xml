@@ -94,8 +94,10 @@
                 <disallowAdditionalPropertiesIfNotPresent>true</disallowAdditionalPropertiesIfNotPresent>
                 <interfaceOnly>true</interfaceOnly>
                 <skipDefaultInterface>true</skipDefaultInterface>
+                <useOptional>true</useOptional>
                 <useJakartaEe>true</useJakartaEe>
                 <useSpringBoot3>true</useSpringBoot3>
+                <useRecords>true</useRecords>
                 <generatedConstructorWithRequiredArgs>false</generatedConstructorWithRequiredArgs>
                 <hideGenerationTimestamp>true</hideGenerationTimestamp>
                 <useBeanValidation>false</useBeanValidation>
